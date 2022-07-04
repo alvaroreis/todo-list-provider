@@ -11,7 +11,7 @@ class TodoListLogo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/logo.png',
+            'assets/images/logo.png',
             height: 200,
           ),
           Text(
