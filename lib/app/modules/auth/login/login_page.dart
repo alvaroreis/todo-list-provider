@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:todo_list_provider/app/core/widgets/todo_list_field.dart';
 
 import '../../../core/ui/todo_list_ui_config.dart';
 import '../../../core/widgets/todo_list_logo.dart';
@@ -32,9 +33,12 @@ class LoginPage extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            TextFormField(),
+                            TodoListField(label: 'E-mail'),
                             const SizedBox(height: 20),
-                            TextFormField(),
+                            TodoListField(
+                              label: 'Senha',
+                              obscureText: true,
+                            ),
                             const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +96,9 @@ class LoginPage extends StatelessWidget {
                               children: [
                                 const Text('Não tem conta? '),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/register');
+                                  },
                                   child: const Text('Cadastre-se'),
                                 )
                               ],

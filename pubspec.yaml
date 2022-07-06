@@ -39,6 +39,11 @@ dependencies:
   path: ^1.8.1
   google_fonts: ^3.0.1
   flutter_signin_button: ^2.0.0
+  firebase_auth: ^3.4.1
+  firebase_core: ^1.19.1
+  validatorless: ^1.2.1
+  synchronized: ^3.0.0+2
+  flutter_overlay_loader: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -64,7 +69,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -78,10 +83,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: TodoListIcons
+      fonts:
+        - asset: assets/fonts/TodoListIcons.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
