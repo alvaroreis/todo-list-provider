@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_provider/app/core/notifier/default_listener_notifier.dart';
 import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
 import 'package:todo_list_provider/app/core/validators/validators.dart';
 import 'package:todo_list_provider/app/core/widgets/todo_list_field.dart';
@@ -25,27 +26,21 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailEC.dispose();
     _passwordEC.dispose();
     _confirmPasswordEC.dispose();
-    context.read<RegisterController>().removeListener(() {});
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-
-    context.read<RegisterController>().addListener(() {
-      final controller = context.read<RegisterController>();
-      final error = controller.error;
-      if (controller.success) {
-        Navigator.pop(context);
-      } else if (error != null && error.isNotEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          margin: const EdgeInsets.all(16),
-          content: Text(error),
-          backgroundColor: Colors.red,
-        ));
-      }
-    });
+    final notifier = DefaultListenerNotifier(
+      changeNotifier: context.read<RegisterController>(),
+    );
+    notifier.listener(
+        context: context,
+        successCallback: (notifier, listener) {
+          listener.dispose();
+          Navigator.pop(context);
+        });
   }
 
   @override
