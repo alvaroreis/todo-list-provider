@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_provider/app/core/ui/todo_list_icons.dart';
 
 class TodoListField extends StatelessWidget {
-  String label;
-  bool isDense;
-  bool obscureText;
-  IconButton? suffixIconButton;
-  ValueNotifier<bool> obscureTextVN;
-  TextEditingController? controller;
-  FormFieldValidator<String>? validator;
+  final String label;
+  final bool isDense;
+  final bool obscureText;
+  final IconButton? suffixIconButton;
+  final ValueNotifier<bool> obscureTextVN;
+  final TextEditingController? controller;
+  final FormFieldValidator<String>? validator;
 
   TodoListField({
     Key? key,
