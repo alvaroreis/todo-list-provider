@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:todo_list_provider/app/core/modules/todo_list_page.dart';
+
+import 'todo_list_page.dart';
 
 class TodoListModule {
   final Map<String, WidgetBuilder> _routers;

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_provider/app/core/notifier/default_listener_notifier.dart';
-import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
-import 'package:todo_list_provider/app/core/validators/validators.dart';
-import 'package:todo_list_provider/app/core/widgets/todo_list_field.dart';
-import 'package:todo_list_provider/app/core/widgets/todo_list_logo.dart';
-import 'package:todo_list_provider/app/modules/auth/register/register_controller.dart';
 import 'package:validatorless/validatorless.dart';
+
+import '../../../core/notifier/default_listener_notifier.dart';
+import '../../../core/ui/theme_extensions.dart';
+import '../../../core/validators/validators.dart';
+import '../../../core/widgets/todo_list_field.dart';
+import '../../../core/widgets/todo_list_logo.dart';
+import 'register_controller.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
