@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import './user_repository.dart';
 import '../../exception/auth_exception.dart';
@@ -91,5 +92,55 @@ class UserRepositoryImpl implements UserRepository {
       log(e.message, error: e, stackTrace: s);
       throw AuthException(message: e.message);
     }
+  }
+
+  @override
+  Future<User?> loginWithGoogle() async {
+    List<String>? loginTypes;
+    try {
+      await logoutGoogle();
+      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (null == googleUser) {
+        return null;
+      }
+
+      loginTypes =
+          await _firebaseAuth.fetchSignInMethodsForEmail(googleUser.email);
+
+      if (loginTypes.contains('password')) {
+        throw AuthException(
+            message:
+                'E-mail já cadastrado, por favor realize o login através do e-mail.');
+      }
+
+      final googleAuth = await googleUser.authentication;
+      final OAuthCredential googleCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential credential =
+          await _firebaseAuth.signInWithCredential(
+        googleCredential,
+      );
+
+      return credential.user;
+    } on FirebaseAuthException catch (e, s) {
+      log(e.message ?? e.toString(), error: e, stackTrace: s);
+      if (e.code == 'account-exists-with-different-credential') {
+        throw AuthException(
+            message:
+                'Login inválido, você se resistrou com os seguintes provedores: ${loginTypes?.join(',')}.');
+      }
+      throw AuthException(
+          message: e.message ?? 'Ocorreu um erro ao realizar o login.');
+    }
+  }
+
+  @override
+  Future<void> logoutGoogle() async {
+    await GoogleSignIn().signOut();
+    _firebaseAuth.signOut();
   }
 }
