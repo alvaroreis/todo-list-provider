@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
+
+import 'theme_extensions.dart';
 
 class Messages {
   final BuildContext context;
@@ -19,7 +20,6 @@ class Messages {
 
   void _showMessage(String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      margin: const EdgeInsets.all(16),
       content: Text(message),
       backgroundColor: color,
     ));
