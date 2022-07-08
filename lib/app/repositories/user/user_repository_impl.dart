@@ -98,34 +98,34 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> loginWithGoogle() async {
     List<String>? loginTypes;
     try {
-      await logoutGoogle();
-      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      await logout();
+      final googleUser = await GoogleSignIn().signIn();
 
       if (null == googleUser) {
         return null;
       }
 
-      loginTypes =
-          await _firebaseAuth.fetchSignInMethodsForEmail(googleUser.email);
+        loginTypes =
+            await _firebaseAuth.fetchSignInMethodsForEmail(googleUser.email);
 
-      if (loginTypes.contains('password')) {
-        throw AuthException(
-            message:
-                'E-mail já cadastrado, por favor realize o login através do e-mail.');
-      }
+        if (loginTypes.contains('password')) {
+          throw AuthException(
+              message:
+                  'E-mail já cadastrado, por favor realize o login através do e-mail.');
+        }
 
-      final googleAuth = await googleUser.authentication;
-      final OAuthCredential googleCredential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+        final googleAuth = await googleUser.authentication;
+        final OAuthCredential googleCredential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      final UserCredential credential =
-          await _firebaseAuth.signInWithCredential(
-        googleCredential,
-      );
+        final UserCredential credential =
+            await _firebaseAuth.signInWithCredential(
+          googleCredential,
+        );
 
-      return credential.user;
+        return credential.user;
     } on FirebaseAuthException catch (e, s) {
       log(e.message ?? e.toString(), error: e, stackTrace: s);
       if (e.code == 'account-exists-with-different-credential') {
@@ -139,7 +139,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> logoutGoogle() async {
+  Future<void> logout() async {
     await GoogleSignIn().signOut();
     _firebaseAuth.signOut();
   }
