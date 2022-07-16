@@ -105,27 +105,27 @@ class UserRepositoryImpl implements UserRepository {
         return null;
       }
 
-        loginTypes =
-            await _firebaseAuth.fetchSignInMethodsForEmail(googleUser.email);
+      loginTypes =
+          await _firebaseAuth.fetchSignInMethodsForEmail(googleUser.email);
 
-        if (loginTypes.contains('password')) {
-          throw AuthException(
-              message:
-                  'E-mail já cadastrado, por favor realize o login através do e-mail.');
-        }
+      if (loginTypes.contains('password')) {
+        throw AuthException(
+            message:
+                'E-mail já cadastrado, por favor realize o login através do e-mail.');
+      }
 
-        final googleAuth = await googleUser.authentication;
-        final OAuthCredential googleCredential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
+      final googleAuth = await googleUser.authentication;
+      final OAuthCredential googleCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-        final UserCredential credential =
-            await _firebaseAuth.signInWithCredential(
-          googleCredential,
-        );
+      final UserCredential credential =
+          await _firebaseAuth.signInWithCredential(
+        googleCredential,
+      );
 
-        return credential.user;
+      return credential.user;
     } on FirebaseAuthException catch (e, s) {
       log(e.message ?? e.toString(), error: e, stackTrace: s);
       if (e.code == 'account-exists-with-different-credential') {
@@ -135,6 +135,9 @@ class UserRepositoryImpl implements UserRepository {
       }
       throw AuthException(
           message: e.message ?? 'Ocorreu um erro ao realizar o login.');
+    } catch (e, s) {
+      log(e.toString(), error: e, stackTrace: s);
+      throw AuthException(message: e.toString());
     }
   }
 
@@ -142,5 +145,14 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> logout() async {
     await GoogleSignIn().signOut();
     _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<void> updateDisplayName(String name) async {
+    final user = _firebaseAuth.currentUser;
+    if (null != user) {
+      await user.updateDisplayName(name);
+      user.reload();
+    }
   }
 }
