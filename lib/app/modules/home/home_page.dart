@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/ui/todo_list_icons.dart';
+import '../tasks/tasks_module.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
@@ -9,6 +10,30 @@ import 'widgets/home_week_filter.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  void _goToCreate(BuildContext context) {
+    //  Navigator.pushNamed(context, '/tasks/create');
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 400),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          animation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInQuad,
+          );
+          return ScaleTransition(
+            scale: animation,
+            alignment: Alignment.bottomRight,
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return TasksModule().getPage(context, '/tasks/create');
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +49,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => _goToCreate(context),
         icon: const Icon(Icons.add),
         label: const Text('Nova Task'),
       ),

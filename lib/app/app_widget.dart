@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/database/sqlite_adm_connection.dart';
 import 'core/navigator/todo_list_navigator.dart';
@@ -6,6 +7,7 @@ import 'core/ui/todo_list_ui_config.dart';
 import 'modules/auth/auth_module.dart';
 import 'modules/home/home_module.dart';
 import 'modules/splash/splash_page.dart';
+import 'modules/tasks/tasks_module.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -38,9 +40,17 @@ class _AppWidgetState extends State<AppWidget> {
       debugShowCheckedModeBanner: false,
       theme: TodoListUiConfig.lightTheme,
       navigatorKey: TodoListNavigator.navigatorKey,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
       routes: {
         ...AuthModule().routers,
         ...HomeModule().routers,
+        ...TasksModule().routers
       },
       home: const SplashPage(),
     );

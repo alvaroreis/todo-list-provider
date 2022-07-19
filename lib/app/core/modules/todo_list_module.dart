@@ -24,4 +24,15 @@ class TodoListModule {
       ),
     );
   }
+
+  Widget getPage(BuildContext context, String path) {
+    final widgetBuilder = _routers[path];
+    if (null != widgetBuilder) {
+      return TodoListPage(
+        pageBuilder: widgetBuilder,
+        bindings: _bindings,
+      );
+    }
+    throw Exception('Page not found');
+  }
 }
