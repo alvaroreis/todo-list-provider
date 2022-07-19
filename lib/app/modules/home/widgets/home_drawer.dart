@@ -32,9 +32,14 @@ class HomeDrawer extends StatelessWidget {
                     const radius = 30.0;
                     return Visibility(
                       visible: hasPhoto,
-                      replacement: const CircleAvatar(
+                      replacement: CircleAvatar(
                         radius: radius,
-                        child: Icon(Icons.person),
+                        backgroundColor: context.primaryColor,
+                        child: Icon(
+                          Icons.person,
+                          size: 32,
+                          color: Colors.grey.shade200,
+                        ),
                       ),
                       child: CircleAvatar(
                         backgroundImage: NetworkImage(photoURL),
