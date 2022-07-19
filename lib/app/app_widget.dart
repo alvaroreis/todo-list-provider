@@ -35,6 +35,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Todo List Provider',
+      debugShowCheckedModeBanner: false,
       theme: TodoListUiConfig.lightTheme,
       navigatorKey: TodoListNavigator.navigatorKey,
       routes: {

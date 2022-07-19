@@ -45,6 +45,7 @@ dependencies:
   synchronized: ^3.0.0+2
   flutter_overlay_loader: ^2.0.0
   google_sign_in: ^5.4.0
+  date_picker_timeline: ^1.2.3
 
 
 dev_dependencies:
