@@ -20,17 +20,13 @@ class AuthProvider extends ChangeNotifier {
 
   void listener() {
     _firebaseAuth.userChanges().listen((_) => notifyListeners());
-    _firebaseAuth.idTokenChanges().listen((user) {
+    _firebaseAuth.authStateChanges().listen((user) {
       if (null != user) {
-        TodoListNavigator.to.pushNamedAndRemoveUntil(
-          '/home',
-          (route) => false,
-        );
-      } else if (!_isLoginRoute) {
-        TodoListNavigator.to.pushNamedAndRemoveUntil(
-          '/login',
-          (route) => false,
-        );
+        TodoListNavigator.to.pushNamedAndRemoveUntil('/home', (route) => false);
+        // } else if (!_isLoginRoute) {
+      } else {
+        TodoListNavigator.to
+            .pushNamedAndRemoveUntil('/login', (route) => false);
       }
     });
   }
