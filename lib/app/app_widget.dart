@@ -42,6 +42,7 @@ class _AppWidgetState extends State<AppWidget> {
       navigatorKey: TodoListNavigator.navigatorKey,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: const [
