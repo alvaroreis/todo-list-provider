@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import './tasks_repository.dart';
 import '../../core/database/sqlite_connection_factory.dart';
-import '../../models/todo_model.dart';
+import '../../domain/models/todo_model.dart';
 
 class TasksRepositoryImpl implements TasksRepository {
   final SqliteConnectionFactory _sqliteConnectionFactory;
