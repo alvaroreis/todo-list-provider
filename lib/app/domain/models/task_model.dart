@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-class TodoModel {
+class TaskModel {
   int? id;
   String descricao;
   DateTime data;
   int finalizado;
-  TodoModel({
+  TaskModel({
     this.id,
     required this.descricao,
     required this.data,
@@ -25,8 +25,8 @@ class TodoModel {
     return result;
   }
 
-  factory TodoModel.fromMap(Map<String, dynamic> map) {
-    return TodoModel(
+  factory TaskModel.fromMap(Map<String, dynamic> map) {
+    return TaskModel(
       id: map['id']?.toInt(),
       descricao: map['descricao'] ?? '',
       data: DateTime.parse(map['data_hora']),
@@ -36,19 +36,19 @@ class TodoModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TodoModel.fromJson(String source) =>
-      TodoModel.fromMap(json.decode(source));
+  factory TaskModel.fromJson(String source) =>
+      TaskModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'TodoModel(id: $id, descricao: $descricao, data: $data, finalizado: $finalizado)';
+    return 'TaskModel(id: $id, descricao: $descricao, data: $data, finalizado: $finalizado)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TodoModel &&
+    return other is TaskModel &&
         other.id == id &&
         other.descricao == descricao &&
         other.data == data &&

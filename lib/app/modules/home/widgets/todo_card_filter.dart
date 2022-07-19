@@ -31,16 +31,13 @@ class TodoCardFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = selected ? Colors.white : context.primaryColor;
-    final cardColor = selected ? context.primaryColor : Colors.white;
-
     return Container(
       constraints: const BoxConstraints(
         minHeight: 120,
         maxWidth: 150,
       ),
       decoration: BoxDecoration(
-          color: cardColor,
+          color: selected ? context.primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(width: 1, color: Colors.grey.withOpacity(.8))),
       margin: const EdgeInsets.only(right: 10),
