@@ -140,4 +140,26 @@ class HomeController extends DefaultChangeNotifier {
       refresh();
     }
   }
+
+  Future<void> deleteTask({required int? taskId}) async {
+    try {
+      showLoadingAndResetState();
+      notifyListeners();
+
+      if (null == taskId) {
+        throw Exception('O parametro taskId não pode ser nulo.');
+      }
+      await _tasksService.delete(taskId);
+    } catch (e, s) {
+      setError('Ocorreu um erro ao deletar a tasks');
+      log(
+        'Ocorreu um erro ao deletar a tasks. Causa: ${e.toString()}',
+        error: e,
+        stackTrace: s,
+      );
+    } finally {
+      hideLoading();
+      refresh();
+    }
+  }
 }

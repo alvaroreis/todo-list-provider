@@ -3,6 +3,7 @@ import '../../domain/dto/week_tasks_dto.dart';
 import '../../domain/models/task_model.dart';
 
 abstract class TasksService {
+  Future<void> delete(int taskId);
   Future<void> save(DateTime date, String description, String userId);
   Future<List<TaskModel>> findAllToday(String userId);
   Future<List<TaskModel>> findAllTomorrow(String userId);

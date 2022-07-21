@@ -88,6 +88,7 @@ class _TasksCreatePageState extends State<TasksCreatePage> {
               TodoListField(
                 label: '',
                 autofocus: true,
+                textCapitalization: TextCapitalization.sentences,
                 controller: _descriptionEC,
                 focusNode: _descriptionFocus,
                 validator: Validatorless.multiple([

@@ -32,6 +32,48 @@ class Tasks extends StatelessWidget {
                   .updateStatus(finish: value!, taskId: model.id);
             },
           ),
+          trailing: IconButton(
+              onPressed: () {
+                final controller =
+                    Provider.of<HomeController>(context, listen: false);
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ChangeNotifierProvider<HomeController>.value(
+                      value: controller,
+                      builder: (context, child) => AlertDialog(
+                        title: const Text(
+                          "Deletar Task",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text(
+                            "Você tem certeza que deseja deletar esta task?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Cancelar',
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              controller.deleteTask(taskId: model.id);
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Deletar',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.close)),
           title: Text(
             model.descricao,
             style: TextStyle(

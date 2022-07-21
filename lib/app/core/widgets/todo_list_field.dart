@@ -12,6 +12,7 @@ class TodoListField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final FocusNode? focusNode;
   final bool autofocus;
+  final TextCapitalization textCapitalization;
 
   TodoListField({
     Key? key,
@@ -22,6 +23,7 @@ class TodoListField extends StatelessWidget {
     this.validator,
     required this.label,
     this.focusNode,
+    this.textCapitalization = TextCapitalization.none,
     this.autofocus = false,
   })  : assert(
           true == obscureText ? suffixIconButton == null : true,
@@ -41,6 +43,7 @@ class TodoListField extends StatelessWidget {
           controller: controller,
           validator: validator,
           focusNode: focusNode,
+          textCapitalization: textCapitalization,
           obscureText: obscureTextValue,
           decoration: InputDecoration(
             isDense: isDense,
