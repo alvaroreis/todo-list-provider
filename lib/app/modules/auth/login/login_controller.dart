@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../core/notifier/default_change_notifier.dart';
 import '../../../exception/auth_exception.dart';
 import '../../../services/user/user_service.dart';
@@ -17,7 +19,8 @@ class LoginController extends DefaultChangeNotifier {
         throw AuthException(message: 'E-mail ou senha inválidos.');
       }
       success();
-    } on AuthException catch (e) {
+    } on AuthException catch (e, s) {
+      log(e.message, error: e, stackTrace: s);
       setError(e.message);
     } finally {
       hideLoading();

@@ -3,14 +3,32 @@ import 'dart:convert';
 class TaskModel {
   int? id;
   String descricao;
+  String userId;
   DateTime data;
   bool finalizado;
   TaskModel({
     this.id,
     required this.descricao,
+    required this.userId,
     required this.data,
     this.finalizado = false,
   });
+
+  TaskModel copyWith({
+    int? id,
+    String? descricao,
+    String? userId,
+    DateTime? data,
+    bool? finalizado,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      descricao: descricao ?? this.descricao,
+      userId: userId ?? this.userId,
+      data: data ?? this.data,
+      finalizado: finalizado ?? this.finalizado,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -19,7 +37,8 @@ class TaskModel {
       result.addAll({'id': id});
     }
     result.addAll({'descricao': descricao});
-    result.addAll({'data_hora': data.toIso8601String()});
+    result.addAll({'user_id': userId});
+    result.addAll({'data': data.toIso8601String()});
     result.addAll({'finalizado': finalizado ? 1 : 0});
 
     return result;
@@ -29,7 +48,8 @@ class TaskModel {
     return TaskModel(
       id: map['id']?.toInt(),
       descricao: map['descricao'] ?? '',
-      data: DateTime.parse(map['data_hora']),
+      userId: map['user_id'] ?? '',
+      data: DateTime.parse(map['data']),
       finalizado: map['finalizado']?.toInt() == 1,
     );
   }
@@ -41,7 +61,7 @@ class TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, descricao: $descricao, data: $data, finalizado: $finalizado)';
+    return 'TaskModel(id: $id, descricao: $descricao, userId: $userId, data: $data, finalizado: $finalizado)';
   }
 
   @override
@@ -51,6 +71,7 @@ class TaskModel {
     return other is TaskModel &&
         other.id == id &&
         other.descricao == descricao &&
+        other.userId == userId &&
         other.data == data &&
         other.finalizado == finalizado;
   }
@@ -59,21 +80,8 @@ class TaskModel {
   int get hashCode {
     return id.hashCode ^
         descricao.hashCode ^
+        userId.hashCode ^
         data.hashCode ^
         finalizado.hashCode;
-  }
-
-  TaskModel copyWith({
-    int? id,
-    String? descricao,
-    DateTime? data,
-    bool? finalizado,
-  }) {
-    return TaskModel(
-      id: id ?? this.id,
-      descricao: descricao ?? this.descricao,
-      data: data ?? this.data,
-      finalizado: finalizado ?? this.finalizado,
-    );
   }
 }

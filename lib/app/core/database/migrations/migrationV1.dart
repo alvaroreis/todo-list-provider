@@ -11,7 +11,8 @@ class MigrationV1 extends Migration {
       create table todo(
         id integer primary key autoincrement,
         descricao varchar(500) not null,
-        data_hora datetime,
+        user_id varchar(100) not null,
+        data datetime,
         finalizado integer
       )
     ''');

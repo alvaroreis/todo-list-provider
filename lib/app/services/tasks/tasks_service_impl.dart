@@ -11,28 +11,29 @@ class TasksServiceImpl implements TasksService {
       : _tasksRepository = tasksRepository;
 
   @override
-  Future<void> save(DateTime date, String description) {
-    return _tasksRepository.save(date, description);
+  Future<void> save(DateTime date, String description, String userId) {
+    return _tasksRepository.save(date, description, userId);
   }
 
   @override
-  Future<List<TaskModel>> findAllToday() {
+  Future<List<TaskModel>> findAllToday(String userId) {
     final date = DateTime.now();
-    return _tasksRepository.findByPeriod(date, date);
+    return _tasksRepository.findByPeriod(date, date, userId);
   }
 
   @override
-  Future<List<TaskModel>> findAllTomorrow() {
+  Future<List<TaskModel>> findAllTomorrow(String userId) {
     final date = DateTime.now().add(const Duration(days: 1));
-    return _tasksRepository.findByPeriod(date, date);
+    return _tasksRepository.findByPeriod(date, date, userId);
   }
 
   @override
-  Future<WeekTasksDTO> findAllWeek() async {
+  Future<WeekTasksDTO> findAllWeek(String userId) async {
     final weekDays = _weekDays;
     final listModels = await _tasksRepository.findByPeriod(
       weekDays.first,
       weekDays.last,
+      userId,
     );
     return WeekTasksDTO(
       start: weekDays.first,
@@ -42,23 +43,24 @@ class TasksServiceImpl implements TasksService {
   }
 
   @override
-  Future<TotalTasksDTO> countToday() {
+  Future<TotalTasksDTO> countToday(String userId) {
     final date = DateTime.now();
-    return _tasksRepository.countByPeriod(date, date);
+    return _tasksRepository.countByPeriod(date, date, userId);
   }
 
   @override
-  Future<TotalTasksDTO> countTomorrow() {
+  Future<TotalTasksDTO> countTomorrow(String userId) {
     final date = DateTime.now().add(const Duration(days: 1));
-    return _tasksRepository.countByPeriod(date, date);
+    return _tasksRepository.countByPeriod(date, date, userId);
   }
 
   @override
-  Future<TotalTasksDTO> countWeek() async {
+  Future<TotalTasksDTO> countWeek(String userId) async {
     final weekDays = _weekDays;
     return _tasksRepository.countByPeriod(
       weekDays.first,
       weekDays.last,
+      userId,
     );
   }
 
@@ -74,7 +76,15 @@ class TasksServiceImpl implements TasksService {
   }
 
   @override
-  Future<void> updateStatus({required bool finish, required int taskId}) {
-    return _tasksRepository.updateStatus(finish: finish, taskId: taskId);
+  Future<void> updateStatus({
+    required bool finish,
+    required int taskId,
+    required String userId,
+  }) {
+    return _tasksRepository.updateStatus(
+      finish: finish,
+      taskId: taskId,
+      userId: userId,
+    );
   }
 }

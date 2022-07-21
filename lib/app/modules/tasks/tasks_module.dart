@@ -21,7 +21,7 @@ class TasksModule extends TodoListModule {
           ),
           ChangeNotifierProvider(
             create: (context) =>
-                TasksCreateController(tasksService: context.read()),
+                TasksCreateController(tasksService: context.read(), firebaseAuth: context.read()),
           )
         ], routers: {
           '/tasks/create': (context) =>
