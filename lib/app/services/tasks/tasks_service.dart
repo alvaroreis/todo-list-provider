@@ -10,5 +10,6 @@ abstract class TasksService {
   Future<TotalTasksDTO> countToday();
   Future<TotalTasksDTO> countTomorrow();
   Future<TotalTasksDTO> countWeek();
-
+  // Future<void> updateStatus(TaskModel model);
+  Future<void> updateStatus({required bool finish, required int taskId});
 }

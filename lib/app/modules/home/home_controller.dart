@@ -15,7 +15,8 @@ class HomeController extends DefaultChangeNotifier {
   List<TaskModel> _allTasks = [];
   List<TaskModel> listModels = [];
   DateTime? initialDateWeek;
-  DateTime? selectedDateWeek;
+  DateTime? _selectedDateWeek;
+  bool filterByFinish = false;
 
   HomeController({
     required TasksService tasksService,
@@ -45,19 +46,21 @@ class HomeController extends DefaultChangeNotifier {
 
       switch (filter) {
         case TaskFilterEnum.today:
-          selectedDateWeek = null;
+          _selectedDateWeek = null;
           listModels = await _tasksService.findAllToday();
           break;
         case TaskFilterEnum.tomorrow:
-          selectedDateWeek = null;
+          _selectedDateWeek = null;
           listModels = await _tasksService.findAllTomorrow();
           break;
         case TaskFilterEnum.week:
           final weekTask = await _tasksService.findAllWeek();
           initialDateWeek = weekTask.start;
           listModels = weekTask.tasks;
-          _filterWeekByDay();
+          _allTasks = weekTask.tasks;
+          filterByParams(date: _selectedDateWeek ?? initialDateWeek);
           break;
+        case TaskFilterEnum.finish:
       }
     } catch (e, s) {
       log('Ocorreu um erro ao buscar tasks', error: e, stackTrace: s);
@@ -70,23 +73,59 @@ class HomeController extends DefaultChangeNotifier {
 
   void refresh() {
     loadTasks();
+  }
+
+  Future<void> filterByStatus() async {
+    await loadTasks();
+    filterByFinish = !filterByFinish;
+    if (filterSelected != TaskFilterEnum.week) {
+      _allTasks = listModels;
+    }
+
+    filterByParams(date: _selectedDateWeek);
+  }
+
+  void filterByParams({required DateTime? date}) {
+    listModels = _allTasks.where((task) {
+      bool valido = true;
+
+      if (filterByFinish && task.finalizado != true) {
+        valido = false;
+      }
+
+      if (null != date) {
+        _selectedDateWeek = date;
+        if (filterSelected == TaskFilterEnum.week &&
+            task.data != _selectedDateWeek) {
+          valido = false;
+        }
+      }
+
+      return valido;
+    }).toList();
     notifyListeners();
   }
 
-  void filterByDay(DateTime date) {
-    selectedDateWeek = date;
-    listModels = _allTasks.where((task) => task.data == date).toList();
-    notifyListeners();
-  }
+  Future<void> updateStatus(
+      {required bool finish, required int? taskId}) async {
+    try {
+      showLoadingAndResetState();
+      notifyListeners();
 
-  void _filterWeekByDay() {
-    if (null != selectedDateWeek) {
-      _allTasks = listModels;
-      filterByDay(selectedDateWeek!);
-    } else if (null != initialDateWeek &&
-        filterSelected == TaskFilterEnum.week) {
-      _allTasks = listModels;
-      filterByDay(initialDateWeek!);
+      if (null == taskId) {
+        throw Exception('O parametro taskId não pode ser nulo.');
+      }
+      await _tasksService.updateStatus(finish: finish, taskId: taskId);
+    } catch (e, s) {
+      setError('Ocorreu um erro ao atualizar o status da tasks');
+      log(
+        'Ocorreu um erro ao atualizar o status da tasks. Causa: ${e.toString()}',
+        error: e,
+        stackTrace: s,
+      );
+    } finally {
+      hideLoading();
+      refresh();
     }
   }
 }

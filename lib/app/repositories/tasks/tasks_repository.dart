@@ -5,4 +5,6 @@ abstract class TasksRepository {
   Future<void> save(DateTime date, String description);
   Future<List<TaskModel>> findByPeriod(DateTime start, DateTime end);
   Future<TotalTasksDTO> countByPeriod(DateTime start, DateTime end);
+  // Future<void> updateStatus(TaskModel model);
+  Future<void> updateStatus({required bool finish, required int taskId});
 }

@@ -72,4 +72,9 @@ class TasksServiceImpl implements TasksService {
 
     return [start, end];
   }
+
+  @override
+  Future<void> updateStatus({required bool finish, required int taskId}) {
+    return _tasksRepository.updateStatus(finish: finish, taskId: taskId);
+  }
 }

@@ -30,7 +30,7 @@ class TaskModel {
       id: map['id']?.toInt(),
       descricao: map['descricao'] ?? '',
       data: DateTime.parse(map['data_hora']),
-      finalizado: map['finalizado']?.toInt() == 1 ? true : false,
+      finalizado: map['finalizado']?.toInt() == 1,
     );
   }
 
@@ -61,5 +61,19 @@ class TaskModel {
         descricao.hashCode ^
         data.hashCode ^
         finalizado.hashCode;
+  }
+
+  TaskModel copyWith({
+    int? id,
+    String? descricao,
+    DateTime? data,
+    bool? finalizado,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      descricao: descricao ?? this.descricao,
+      data: data ?? this.data,
+      finalizado: finalizado ?? this.finalizado,
+    );
   }
 }

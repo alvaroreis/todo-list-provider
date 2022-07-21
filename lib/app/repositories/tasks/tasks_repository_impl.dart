@@ -65,4 +65,13 @@ class TasksRepositoryImpl implements TasksRepository {
       },
     ).first;
   }
+
+  @override
+  Future<void> updateStatus({required bool finish, required int taskId}) async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    await conn.rawUpdate(
+      'UPDATE TODO SET finalizado = ? WHERE id = ?',
+      [finish, taskId],
+    );
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/ui/theme_extensions.dart';
+import '../../../domain/enum/task_filter_enum.dart';
 import '../../../domain/models/task_model.dart';
 import '../home_controller.dart';
 import 'tasks.dart';
@@ -25,8 +26,9 @@ class HomeTasks extends StatelessWidget {
                 style: context.titleStyle,
               );
             },
-            selector: (context, controller) =>
-                controller.filterSelected.description,
+            selector: (context, controller) => controller.filterByFinish
+                ? TaskFilterEnum.finish.description
+                : controller.filterSelected.description,
           ),
           Column(
             children: context

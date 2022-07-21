@@ -5,7 +5,7 @@ import '../../../core/ui/theme_extensions.dart';
 import '../../../domain/dto/total_tasks_dto.dart';
 import '../../../domain/enum/task_filter_enum.dart';
 import '../home_controller.dart';
-import 'todo_card_filter.dart';
+import 'task_card_filter.dart';
 
 class HomeFilters extends StatelessWidget {
   const HomeFilters({super.key});

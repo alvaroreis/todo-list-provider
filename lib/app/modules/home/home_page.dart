@@ -68,8 +68,24 @@ class _HomePageState extends State<HomePage> {
         actions: [
           PopupMenuButton(
             icon: const Icon(TodoListIcons.filter),
+            padding: EdgeInsets.zero,
+            color: Theme.of(context).scaffoldBackgroundColor,
+            
+            tooltip: "Filtrar Task's",
+            onSelected: (value) => widget._controller.filterByStatus(),
             itemBuilder: (_) => [
-              const PopupMenuItem<bool>(child: Text('Concluidas')),
+              PopupMenuItem<bool>(
+                value: widget._controller.filterByFinish,
+                child: SwitchListTile(
+                  dense: true,
+                  value: widget._controller.filterByFinish,
+                  title: const Text('Filtrar por concluídas'),
+                  onChanged: (value) {
+                    widget._controller.filterByStatus();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
             ],
           )
         ],
