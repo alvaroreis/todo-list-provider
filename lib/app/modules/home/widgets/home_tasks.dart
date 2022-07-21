@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/ui/theme_extensions.dart';
+import '../../../domain/models/task_model.dart';
+import '../home_controller.dart';
 import 'tasks.dart';
 
 class HomeTasks extends StatelessWidget {
@@ -15,17 +18,22 @@ class HomeTasks extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Text(
-            "TASK'S DE HOJE",
-            style: context.titleStyle,
+          Selector<HomeController, String>(
+            builder: (context, value, child) {
+              return Text(
+                "TASK'S $value",
+                style: context.titleStyle,
+              );
+            },
+            selector: (context, controller) =>
+                controller.filterSelected.description,
           ),
           Column(
-            children: const [
-              Tasks(),
-              Tasks(),
-              Tasks(),
-              Tasks(),
-            ],
+            children: context
+                .select<HomeController, List<TaskModel>>(
+                    (controller) => controller.listModels)
+                .map((task) => Tasks(model: task))
+                .toList(),
           )
         ],
       ),

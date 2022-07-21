@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 
+import '../../core/notifier/default_listener_notifier.dart';
 import '../../core/ui/todo_list_icons.dart';
 import '../tasks/tasks_module.dart';
+import 'home_controller.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
 import 'widgets/home_tasks.dart';
 import 'widgets/home_week_filter.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required HomeController controller})
+      : _controller = controller,
+        super(key: key);
 
-  void _goToCreate(BuildContext context) {
+  final HomeController _controller;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Future<void> _goToCreate() async {
     //  Navigator.pushNamed(context, '/tasks/create');
-    Navigator.push(
+    await Navigator.push(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),
@@ -33,6 +44,21 @@ class HomePage extends StatelessWidget {
         },
       ),
     );
+    widget._controller.refresh();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DefaultListenerNotifier(changeNotifier: widget._controller).listener(
+      context: context,
+      successCallback: (notifier, listener) {
+        listener.dispose();
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget._controller.loadTasks();
+    });
   }
 
   @override
@@ -49,7 +75,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _goToCreate(context),
+        onPressed: _goToCreate,
         icon: const Icon(Icons.add),
         label: const Text('Nova Task'),
       ),

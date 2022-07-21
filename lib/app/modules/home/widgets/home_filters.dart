@@ -24,12 +24,15 @@ class HomeFilters extends StatelessWidget {
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
           child: Row(
             children: [
               TodoCardFilter(
                 label: 'HOJE',
                 taskFilter: TaskFilterEnum.today,
-                totalTasks: TotalTasksDTO(total: 10, totalFinish: 5),
+                totalTasks: context.select<HomeController, TotalTasksDTO?>(
+                  (value) => value.countToday,
+                ),
                 selected: context.select<HomeController, bool>(
                   (value) => value.filterSelected == TaskFilterEnum.today,
                 ),
@@ -37,7 +40,9 @@ class HomeFilters extends StatelessWidget {
               TodoCardFilter(
                 label: 'AMANHÃ',
                 taskFilter: TaskFilterEnum.tomorrow,
-                totalTasks: TotalTasksDTO(total: 10, totalFinish: 8),
+                totalTasks: context.select<HomeController, TotalTasksDTO?>(
+                  (value) => value.countTomorrow,
+                ),
                 selected: context.select<HomeController, bool>(
                   (value) => value.filterSelected == TaskFilterEnum.tomorrow,
                 ),
@@ -45,7 +50,9 @@ class HomeFilters extends StatelessWidget {
               TodoCardFilter(
                 label: 'SEMANA',
                 taskFilter: TaskFilterEnum.week,
-                totalTasks: TotalTasksDTO(total: 10, totalFinish: 5),
+                totalTasks: context.select<HomeController, TotalTasksDTO?>(
+                  (value) => value.countWeek,
+                ),
                 selected: context.select<HomeController, bool>(
                   (value) => value.filterSelected == TaskFilterEnum.week,
                 ),

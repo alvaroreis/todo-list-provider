@@ -4,12 +4,12 @@ class TaskModel {
   int? id;
   String descricao;
   DateTime data;
-  int finalizado;
+  bool finalizado;
   TaskModel({
     this.id,
     required this.descricao,
     required this.data,
-    this.finalizado = 0,
+    this.finalizado = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,7 +20,7 @@ class TaskModel {
     }
     result.addAll({'descricao': descricao});
     result.addAll({'data_hora': data.toIso8601String()});
-    result.addAll({'finalizado': finalizado});
+    result.addAll({'finalizado': finalizado ? 1 : 0});
 
     return result;
   }
@@ -30,7 +30,7 @@ class TaskModel {
       id: map['id']?.toInt(),
       descricao: map['descricao'] ?? '',
       data: DateTime.parse(map['data_hora']),
-      finalizado: map['finalizado']?.toInt() ?? 0,
+      finalizado: map['finalizado']?.toInt() == 1 ? true : false,
     );
   }
 

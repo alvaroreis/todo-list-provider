@@ -1,4 +1,5 @@
 import './tasks_service.dart';
+import '../../domain/dto/total_tasks_dto.dart';
 import '../../domain/dto/week_tasks_dto.dart';
 import '../../domain/models/task_model.dart';
 import '../../repositories/tasks/tasks_repository.dart';
@@ -28,13 +29,47 @@ class TasksServiceImpl implements TasksService {
 
   @override
   Future<WeekTasksDTO> findAllWeek() async {
+    final weekDays = _weekDays;
+    final listModels = await _tasksRepository.findByPeriod(
+      weekDays.first,
+      weekDays.last,
+    );
+    return WeekTasksDTO(
+      start: weekDays.first,
+      end: weekDays.last,
+      tasks: listModels,
+    );
+  }
+
+  @override
+  Future<TotalTasksDTO> countToday() {
+    final date = DateTime.now();
+    return _tasksRepository.countByPeriod(date, date);
+  }
+
+  @override
+  Future<TotalTasksDTO> countTomorrow() {
+    final date = DateTime.now().add(const Duration(days: 1));
+    return _tasksRepository.countByPeriod(date, date);
+  }
+
+  @override
+  Future<TotalTasksDTO> countWeek() async {
+    final weekDays = _weekDays;
+    return _tasksRepository.countByPeriod(
+      weekDays.first,
+      weekDays.last,
+    );
+  }
+
+  List<DateTime> get _weekDays {
     final today = DateTime.now();
     DateTime start = DateTime(today.year, today.month, today.day, 0, 0, 0);
     if (start.weekday != DateTime.monday) {
       start.subtract(Duration(days: (start.weekday - 1)));
     }
     final end = start.add(const Duration(days: 7));
-    final listModels = await _tasksRepository.findByPeriod(start, end);
-    return WeekTasksDTO(start: start, end: end, tasks: listModels);
+
+    return [start, end];
   }
 }
