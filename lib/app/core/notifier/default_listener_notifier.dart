@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:todo_list_provider/app/core/notifier/default_change_notifier.dart';
-import 'package:todo_list_provider/app/core/ui/messages.dart';
 
+import '../ui/messages.dart';
+import 'default_change_notifier.dart';
+
+typedef EverVoidCallback = void Function(
+  DefaultChangeNotifier notifier,
+  DefaultListenerNotifier listener,
+);
 typedef SuccessVoidCallback = void Function(
   DefaultChangeNotifier notifier,
   DefaultListenerNotifier listener,
@@ -21,8 +26,13 @@ class DefaultListenerNotifier {
     required BuildContext context,
     required SuccessVoidCallback successCallback,
     ErrorVoidCallback? errorCallback,
+    EverVoidCallback? everCallback,
   }) {
     changeNotifier.addListener(() {
+      if (null != everCallback) {
+        everCallback(changeNotifier, this);
+      }
+
       if (changeNotifier.loading) {
         Loader.show(context);
       } else {

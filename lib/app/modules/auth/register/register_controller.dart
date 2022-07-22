@@ -1,7 +1,6 @@
-import 'package:todo_list_provider/app/exception/auth_exception.dart';
-import 'package:todo_list_provider/app/services/user/user_service.dart';
-
 import '../../../core/notifier/default_change_notifier.dart';
+import '../../../exception/auth_exception.dart';
+import '../../../services/user/user_service.dart';
 
 class RegisterController extends DefaultChangeNotifier {
   final UserService _userService;

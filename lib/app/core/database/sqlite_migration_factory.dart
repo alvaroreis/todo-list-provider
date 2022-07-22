@@ -1,6 +1,5 @@
-import 'package:todo_list_provider/app/core/database/migrations/migration.dart';
-import 'package:todo_list_provider/app/core/database/migrations/migrationV1.dart';
-
+import 'migrations/migration.dart';
+import 'migrations/migrationV1.dart';
 import 'migrations/migrationV2.dart';
 import 'migrations/migrationV3.dart';
 

@@ -1,7 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:sqflite/sqflite.dart';
-import 'package:todo_list_provider/app/core/database/migrations/migration.dart';
+
+import 'migration.dart';
 
 class MigrationV2 extends Migration {
   @override
