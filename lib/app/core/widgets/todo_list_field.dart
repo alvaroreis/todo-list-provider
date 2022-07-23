@@ -48,7 +48,6 @@ class TodoListField extends StatelessWidget {
           decoration: InputDecoration(
             isDense: isDense,
             labelText: label,
-            labelStyle: const TextStyle(fontSize: 15, color: Colors.black),
             suffixIcon: suffixIconButton ??
                 (true == obscureText
                     ? IconButton(
@@ -63,13 +62,6 @@ class TodoListField extends StatelessWidget {
                         ),
                       )
                     : null),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: const BorderSide(color: Colors.red),
-            ),
           ),
         );
       },

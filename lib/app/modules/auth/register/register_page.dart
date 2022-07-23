@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
@@ -154,7 +154,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       child: const Padding(
                         padding: EdgeInsets.all(10),
-                        child: Text('Salvar'),
+                        child: Text(
+                          'Salvar',
+                        ),
                       ),
                     ),
                   ),

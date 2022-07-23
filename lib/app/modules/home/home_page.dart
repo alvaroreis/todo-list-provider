@@ -23,7 +23,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> _goToCreate() async {
-    //  Navigator.pushNamed(context, '/tasks/create');
     await Navigator.push(
       context,
       PageRouteBuilder(
@@ -70,7 +69,6 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(TodoListIcons.filter),
             padding: EdgeInsets.zero,
             color: Theme.of(context).scaffoldBackgroundColor,
-            
             tooltip: "Filtrar Task's",
             onSelected: (value) => widget._controller.filterByStatus(),
             itemBuilder: (_) => [

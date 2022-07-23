@@ -79,7 +79,7 @@ class _TasksCreatePageState extends State<TasksCreatePage> {
               Center(
                 child: Text(
                   'Criar atividade',
-                  style: context.titleStyle.copyWith(fontSize: 30),
+                  style: context.titleStyle.copyWith(fontSize: 28),
                 ),
               ),
               const SizedBox(

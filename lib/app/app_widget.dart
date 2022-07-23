@@ -39,6 +39,8 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'Todo List Provider',
       debugShowCheckedModeBanner: false,
       theme: TodoListUiConfig.lightTheme,
+      darkTheme: TodoListUiConfig.darkTheme,
+      themeMode: ThemeMode.light,
       navigatorKey: TodoListNavigator.navigatorKey,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

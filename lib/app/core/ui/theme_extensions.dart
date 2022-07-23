@@ -6,9 +6,8 @@ extension ThemeExtensions on BuildContext {
   Color? get buttonColor => Theme.of(this).buttonTheme.colorScheme?.primary;
   TextTheme get textTheme => Theme.of(this).textTheme;
 
-  TextStyle get titleStyle => const TextStyle(
-        fontSize: 12,
+  TextStyle get titleStyle => textTheme.labelMedium!.copyWith(
         fontWeight: FontWeight.bold,
-        color: Colors.grey,
+        color: Theme.of(this).dividerColor,
       );
 }

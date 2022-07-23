@@ -6,7 +6,6 @@ import 'package:validatorless/validatorless.dart';
 
 import '../../../core/notifier/default_listener_notifier.dart';
 import '../../../core/ui/messages.dart';
-import '../../../core/ui/todo_list_ui_config.dart';
 import '../../../core/widgets/todo_list_field.dart';
 import '../../../core/widgets/todo_list_logo.dart';
 import 'login_controller.dart';
@@ -112,7 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                                         .read<LoginController>()
                                         .forgotPassword(email);
                                   },
-                                  child: const Text('Esqueceu sua senha?'),
+                                  child: const Text(
+                                    'Esqueceu sua senha?',
+                                  ),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
@@ -146,11 +147,13 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: TodoListUiConfig.secondary,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                           border: Border(
                             top: BorderSide(
                               width: 2,
-                              color: Colors.grey.withAlpha(50),
+                              color:
+                                  Theme.of(context).dividerColor.withAlpha(50),
                             ),
                           ),
                         ),
@@ -176,7 +179,10 @@ class _LoginPageState extends State<LoginPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text('Não tem conta? '),
+                                Text(
+                                  'Não tem conta? ',
+                                  style: Theme.of(context).textTheme.button,
+                                ),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pushNamed(context, '/register');

@@ -38,15 +38,15 @@ class CalendarButtom extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1.6),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.today,
-              color: Colors.grey,
+              color: Theme.of(context).dividerColor,
             ),
             const SizedBox(
               width: 10,

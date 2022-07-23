@@ -17,6 +17,7 @@ class HomeHeader extends StatelessWidget {
             'E ai, $value!',
             style: context.textTheme.headline5?.copyWith(
               fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColorDark,
             ),
           );
         },

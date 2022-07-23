@@ -15,6 +15,7 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: ListView(
         children: [
           DrawerHeader(
@@ -31,14 +32,14 @@ class HomeDrawer extends StatelessWidget {
                     final hasPhoto = photoURL.isNotEmpty;
                     const radius = 30.0;
                     return Visibility(
-                      visible: hasPhoto,
+                      visible: !hasPhoto,
                       replacement: CircleAvatar(
                         radius: radius,
                         backgroundColor: context.primaryColor,
                         child: Icon(
                           Icons.person,
                           size: 32,
-                          color: Colors.grey.shade200,
+                          color: Theme.of(context).primaryColorLight,
                         ),
                       ),
                       child: CircleAvatar(
@@ -57,10 +58,7 @@ class HomeDrawer extends StatelessWidget {
                             'Não informado';
                       },
                       builder: (_, value, __) {
-                        return Text(
-                          value,
-                          style: context.textTheme.subtitle2,
-                        );
+                        return Text(value, style: context.textTheme.subtitle2);
                       },
                     ),
                   ),
